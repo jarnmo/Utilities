@@ -276,6 +276,14 @@ namespace Utilities.Reactive
             return this.SetValidateNotifyError(xs => xs.Select(x => validator(x)));
         }
 
+        /// <summary>
+        /// Implicit conversion to the value
+        /// </summary>
+        public static implicit operator T(ReactivePropertyBase<T> property)
+        {
+            return property._latestValue;
+        }
+
         /// <summary>Get INotifyDataErrorInfo's error store</summary>
         public System.Collections.IEnumerable GetErrors(string propertyName)
         {
