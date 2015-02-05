@@ -58,8 +58,10 @@ namespace Utilities.Reactive
         private readonly IDisposable _sourceDisposable;
         private readonly IDisposable _raiseSubscription;
 
-        // for Validation
-        private bool _isValueChanged = false;
+        /// <summary>
+        /// True if the Value has been changed at least once.
+        /// </summary>
+        public bool IsValueChanged { get; private set; }
 
         private readonly SerialDisposable _validateNotifyErrorSubscription = new SerialDisposable();
         private readonly Subject<IEnumerable> _errorsTrigger = new Subject<IEnumerable>();
@@ -99,7 +101,7 @@ namespace Utilities.Reactive
             merge = merge.Do(x =>
             {
                 // setvalue immediately
-                if (!_isValueChanged) _isValueChanged = true;
+                if (!IsValueChanged) IsValueChanged = true;
                 _latestValue = x;
             });
 
