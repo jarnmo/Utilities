@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 
 namespace Utilities.Reactive
 {
-    public class ReactiveProperty<T> : ReactivePropertyBase<T>, IReactiveProperty
+    public class ReactiveProperty<T> : ReactivePropertyBase<T>, IReactiveProperty, IObserver<T>
     {
         /// <summary>
         /// Get latestValue or push(set) value.
@@ -61,6 +61,21 @@ namespace Utilities.Reactive
                 ReactivePropertyMode.DistinctUntilChanged | ReactivePropertyMode.RaiseLatestValueOnSubscribe) :
                     base(source, raiseEventScheduler, initialValue, mode)
         {
+        }
+
+        void IObserver<T>.OnCompleted()
+        {
+            
+        }
+
+        void IObserver<T>.OnError(Exception error)
+        {
+            
+        }
+
+        void IObserver<T>.OnNext(T value)
+        {
+            Value = value;
         }
     }
 }
